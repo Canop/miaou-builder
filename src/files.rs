@@ -1,9 +1,11 @@
 use {
-    crate::*,
     lazy_regex::*,
     std::{
         fs,
-        io::Read,
+        io::{
+            self,
+            Read,
+        },
         path::{
             Path,
             PathBuf,
@@ -55,12 +57,7 @@ pub fn stem_of(path: &Path) -> anyhow::Result<String> {
         .to_str()
         .ok_or_else(|| anyhow::anyhow!("invalid file name"))?;
     let (_, stem) = regex_captures!(r"^(.*)(?:\.[^\.]+)?$", file_name).unwrap();
-    let stem = path
-        .file_stem()
-        .and_then(|os_str| os_str.to_str())
-        .ok_or_else(|| anyhow::anyhow!("file_stem not found"))?
-        .to_string();
-    Ok(stem)
+    Ok(stem.to_string())
 }
 
 pub fn name_of(path: &Path) -> anyhow::Result<String> {
@@ -129,4 +126,17 @@ pub fn write<P: AsRef<Path>>(
 fn test_stem() {
     let path = PathBuf::from("/a/b/rooms.mob.scss");
     assert_eq!(stem_of(&path).unwrap(), "rooms.mob");
+}
+
+pub fn copy(src: &Path, dst: &Path) -> io::Result<()> {
+    if src.is_dir() {
+        fs::create_dir_all(dst)?;
+        for entry in fs::read_dir(src)? {
+            let entry = entry?;
+            copy(&entry.path(), &dst.join(entry.file_name()))?;
+        }
+    } else if src.is_file() {
+        fs::copy(src, dst)?;
+    }
+    Ok(())
 }

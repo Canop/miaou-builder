@@ -11,12 +11,10 @@ use {
 };
 
 
-pub struct ScssTask {}
+#[derive(Debug, Default)]
+pub struct CssTask {}
 
-impl ScssTask {
-    pub fn new() -> anyhow::Result<Self> {
-        Ok(Self {})
-    }
+impl CssTask {
     fn do_pages(
         &self,
         project: &Project,
@@ -24,16 +22,12 @@ impl ScssTask {
         let options = grass::Options::default();
         let pages = project.list_files("/src/page-scss/*.scss")?;
         for page in pages {
-            println!("page: {}", page.display());
             let scss = fs::read_to_string(&page)?;
             let css = grass::from_string(&scss, &options)?;
             //println!("css: {}", css);
-            let stem = files::stem_of(&page)?;
-            println!("stem: {}", stem);
             let css_path: PathBuf =
                 files::dest_path(&page, &project.build_dir.join("static"), "css")?;
             files::write(&css_path, &css)?;
-            println!("css_path: {}", css_path.display());
         }
         Ok(())
     }
@@ -85,8 +79,9 @@ impl ScssTask {
 
         Ok(())
     }
-
-    pub fn execute(
+}
+impl Task for CssTask {
+    fn execute(
         &self,
         project: &Project,
     ) -> anyhow::Result<()> {
@@ -108,10 +103,6 @@ impl Dirs {
             self.dirs.push(dir);
         }
     }
-    fn add_parent(&mut self, path: &Path) {
-        let parent = path.parent().unwrap();
-        self.add(parent);
-    }
     fn path(&self, path: &Path) -> Option<PathBuf> {
         if path.is_absolute() {
             return Some(PathBuf::from(path));
@@ -122,7 +113,6 @@ impl Dirs {
                 return Some(path);
             }
         }
-        //println!(" {} not found", path.display());
         None
     }
 }

@@ -18,8 +18,9 @@ fn main() -> anyhow::Result<()> {
         return Ok(());
     }
     let project = Project::new()?;
-    let task = Task::Scss;
-    task.execute(&project)?;
+    let mut task_set = TaskSet::default();
+    args.task.add_to_set(&mut task_set, &project);
+    task_set.execute(&project)?;
     cli_log::info!("bye");
     Ok(())
 }

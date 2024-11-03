@@ -1,15 +1,9 @@
 use {
     crate::*,
     clap::{
-        CommandFactory,
         Parser,
     },
 };
-
-static INTRO: &str = "
-
-a builder for miaou
-";
 
 /// Launch arguments
 #[derive(Debug, Parser)]
@@ -28,4 +22,6 @@ pub struct Args {
     /// Print the version
     #[arg(long)]
     pub version: bool,
+
+    pub task: TaskRef,
 }

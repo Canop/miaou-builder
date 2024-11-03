@@ -4,7 +4,6 @@ use {
         fs,
         io::Read,
         path::{
-            Path,
             PathBuf,
         },
     },
@@ -21,14 +20,17 @@ fn env_dir(name: &str) -> anyhow::Result<PathBuf> {
 
 #[derive(Debug)]
 pub struct Project {
+    /// The "miaou" root directory.
     pub root_dir: PathBuf,
+    /// Where miaou si built. It's normally the same as root_dir but
+    /// can be changed.
     pub build_dir: PathBuf,
 }
 
 impl Project {
     pub fn new() -> anyhow::Result<Self> {
         let root_dir = env_dir("MIAOU_ROOT")?;
-        let build_dir = root_dir.join("build");
+        let build_dir = root_dir.clone();
         Ok(Self {
             root_dir,
             build_dir,
