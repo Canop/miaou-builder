@@ -14,6 +14,7 @@ impl ClientJsTask {
         let mut js = String::new();
         for glob in [
             "/src/main-js/*.js",
+            "/src/main-js/prettify/prettify.js",
             "/src/main-js/prettify/lang-*.js",
             "/plugins/*/client-scripts/*.js",
         ] {
