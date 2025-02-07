@@ -3,9 +3,7 @@ use {
     std::{
         fs,
         io::Read,
-        path::{
-            PathBuf,
-        },
+        path::PathBuf,
     },
 };
 

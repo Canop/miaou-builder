@@ -1,11 +1,7 @@
-use {
-    crate::*,
-};
-
+use crate::*;
 
 #[derive(Debug, Default)]
-pub struct CleanTask {
-}
+pub struct CleanTask {}
 
 impl Task for CleanTask {
     fn execute(
@@ -20,4 +16,3 @@ impl Task for CleanTask {
         Ok(())
     }
 }
-

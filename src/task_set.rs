@@ -1,6 +1,4 @@
-use {
-    crate::*,
-};
+use crate::*;
 
 #[derive(Default)]
 pub struct TaskSet {
@@ -8,7 +6,10 @@ pub struct TaskSet {
 }
 
 impl TaskSet {
-    pub fn add(&mut self, task: Box<dyn Task>) {
+    pub fn add(
+        &mut self,
+        task: Box<dyn Task>,
+    ) {
         self.tasks.push(task);
     }
     pub fn execute(
@@ -21,5 +22,3 @@ impl TaskSet {
         Ok(())
     }
 }
-
-

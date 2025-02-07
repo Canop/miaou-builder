@@ -1,10 +1,7 @@
-use {
-    crate::*,
-};
+use crate::*;
 
 #[derive(Default)]
-pub struct ClientJsTask {
-}
+pub struct ClientJsTask {}
 
 impl ClientJsTask {
     pub fn do_miaou_js(
@@ -49,16 +46,15 @@ impl ClientJsTask {
         for page in &pages {
             let mut js = String::new();
             files::read_file_to_string(page, &mut js)?;
-            let dest_path = files::dest_path(
-                page,
-                &dest_dir,
-                "min.js"
-            )?;
+            let dest_path = files::dest_path(page, &dest_dir, "min.js")?;
             files::write(&dest_path, &js)?;
         }
         Ok(())
     }
-    pub fn minify_js(&self, input: String) -> String {
+    pub fn minify_js(
+        &self,
+        input: String,
+    ) -> String {
         input
     }
 }

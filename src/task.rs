@@ -6,4 +6,3 @@ pub trait Task {
         project: &Project,
     ) -> anyhow::Result<()>;
 }
-

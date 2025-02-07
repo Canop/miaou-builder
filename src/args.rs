@@ -1,8 +1,6 @@
 use {
     crate::*,
-    clap::{
-        Parser,
-    },
+    clap::Parser,
 };
 
 /// Launch arguments

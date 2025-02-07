@@ -1,25 +1,25 @@
-mod resources;
 mod args;
+mod clean;
 mod client_js;
+mod css;
 mod files;
 mod project;
-mod css;
+mod resources;
 mod task;
-mod clean;
 mod task_ref;
 mod task_set;
 
 pub use {
-    task_ref::*,
-    task_set::*,
+    args::*,
     clean::*,
     client_js::*,
-    args::*,
+    css::*,
     files::*,
     project::*,
-    css::*,
-    task::*,
     resources::*,
+    task::*,
+    task_ref::*,
+    task_set::*,
 };
 
 #[macro_use]

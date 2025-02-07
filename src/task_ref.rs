@@ -51,7 +51,11 @@ impl FromStr for TaskRef {
 }
 
 impl TaskRef {
-    pub fn add_to_set(self, task_set: &mut TaskSet, _project: &Project) {
+    pub fn add_to_set(
+        self,
+        task_set: &mut TaskSet,
+        _project: &Project,
+    ) {
         match self {
             Self::All => {
                 task_set.add(Box::new(CleanTask::default()));

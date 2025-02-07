@@ -1,10 +1,7 @@
-use {
-    crate::*,
-};
+use crate::*;
 
 #[derive(Debug, Default)]
-pub struct ResourcesTask {
-}
+pub struct ResourcesTask {}
 
 impl ResourcesTask {
     pub fn do_main_resources(

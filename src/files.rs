@@ -56,7 +56,7 @@ pub fn stem_of(path: &Path) -> anyhow::Result<String> {
         .ok_or_else(|| anyhow::anyhow!("file_name not found"))?
         .to_str()
         .ok_or_else(|| anyhow::anyhow!("invalid file name"))?;
-    let (_, stem) = regex_captures!(r"^(.*)(?:\.[^\.]+)?$", file_name).unwrap();
+    let (_, stem) = regex_captures!(r"^(.*?)(?:\.[^\.]+)?$", file_name).unwrap();
     Ok(stem.to_string())
 }
 
@@ -83,7 +83,7 @@ pub fn read_file_to_string(
     path: &Path,
     content: &mut String,
 ) -> anyhow::Result<()> {
-    let mut file = fs::File::open(&path)?;
+    let mut file = fs::File::open(path)?;
     file.read_to_string(content)?;
     Ok(())
 }
@@ -128,7 +128,10 @@ fn test_stem() {
     assert_eq!(stem_of(&path).unwrap(), "rooms.mob");
 }
 
-pub fn copy(src: &Path, dst: &Path) -> io::Result<()> {
+pub fn copy(
+    src: &Path,
+    dst: &Path,
+) -> io::Result<()> {
     if src.is_dir() {
         fs::create_dir_all(dst)?;
         for entry in fs::read_dir(src)? {
